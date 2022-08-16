@@ -1,3 +1,4 @@
+package BDController;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -5,9 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,28 +19,33 @@ import javax.swing.border.TitledBorder;
 import javax.swing.text.MaskFormatter;
 
 
-public class recebeCadastro extends JFrame {
+public class cadastroCliente extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField campo_nome;
 	private JTextField campo_email;
-	private JTextField campo_endereco;
+	private JTextField campo_logradouro;
 	private JTextField campo_cidade;
 	private JTextField campo_num;
 	private JTextField campo_complemento;
+	private JTextField campo_uf;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
+		EventQueue.invokeLater(new Runnable() { 
 			public void run() {
 				try {
-					recebeCadastro frame = new recebeCadastro();
+					cadastroCliente frame = new cadastroCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace(); 
-				}
+					e.printStackTrace();   
+				} 
 			}
 		});
 	}
@@ -50,7 +54,7 @@ public class recebeCadastro extends JFrame {
 	 * Create the frame.
 	 * @throws ParseException 
 	 */
-	public recebeCadastro() throws ParseException {
+	public cadastroCliente() throws ParseException {
 		
 		Sistema executar = new Sistema();
 		executar.conectar();
@@ -100,7 +104,7 @@ public class recebeCadastro extends JFrame {
 		JFormattedTextField campo_cpf = new JFormattedTextField();
 		MaskFormatter mask_cpf = new MaskFormatter("###.###.###-##");
 		mask_cpf.install(campo_cpf);
-		campo_cpf.setToolTipText("");
+		campo_cpf.setToolTipText(""); 
 		campo_cpf.setBounds(10, 95, 194, 20);
 		panel_dados.add(campo_cpf);
 		
@@ -148,10 +152,10 @@ public class recebeCadastro extends JFrame {
 		text_logradouro.setBounds(10, 26, 79, 14);
 		panel_endereco.add(text_logradouro);
 		
-		campo_endereco = new JTextField();
-		campo_endereco.setColumns(10);
-		campo_endereco.setBounds(10, 44, 507, 20);
-		panel_endereco.add(campo_endereco);
+		campo_logradouro = new JTextField();
+		campo_logradouro.setColumns(10);
+		campo_logradouro.setBounds(10, 44, 507, 20);
+		panel_endereco.add(campo_logradouro);
 		
 		JLabel text_bairro = new JLabel("Bairro:");
 		text_bairro.setBounds(10, 128, 46, 14);
@@ -173,15 +177,6 @@ public class recebeCadastro extends JFrame {
 		JFormattedTextField campo_bairro = new JFormattedTextField();
 		campo_bairro.setBounds(10, 144, 186, 20);
 		panel_endereco.add(campo_bairro);
-		
-		JComboBox campo_uf = new JComboBox();
-		campo_uf.setMaximumRowCount(3);
-		campo_uf.setAutoscrolls(true);
-		campo_uf.setModel(new DefaultComboBoxModel(new String[] {"", "RO", "AC", "AM", "RR", "PA", "AP", "TO", "MA", "PI", "CE", "RN", "PB", "PE", "AL", "SE", "BA", "MG", "ES", "RJ", "SP", "PR", "SC", "RS", "MS", "MT", "GO", "DF"}));
-		campo_uf.setBackground(Color.WHITE);
-		campo_uf.setForeground(Color.BLACK);
-		campo_uf.setBounds(454, 144, 63, 20);
-		panel_endereco.add(campo_uf);
 		
 		JLabel ob5 = new JLabel("*");
 		ob5.setForeground(Color.RED);
@@ -214,7 +209,7 @@ public class recebeCadastro extends JFrame {
 		
 		JLabel ob9 = new JLabel("*");
 		ob9.setForeground(Color.RED);
-		ob9.setBounds(276, 147, 9, 14);
+		ob9.setBounds(276, 147, 9, 14); 
 		panel_endereco.add(ob9);
 		
 		campo_complemento = new JTextField();
@@ -231,6 +226,8 @@ public class recebeCadastro extends JFrame {
 		panel_endereco.add(text_num_1);
 		
 		JFormattedTextField campo_cep = new JFormattedTextField();
+		MaskFormatter mask_cep = new MaskFormatter("#####-###");
+		mask_cep.install(campo_cep);
 		campo_cep.setBounds(401, 92, 116, 20);
 		panel_endereco.add(campo_cep);
 		
@@ -247,6 +244,11 @@ public class recebeCadastro extends JFrame {
 		btn_buscar.setBounds(306, 91, 89, 20);
 		panel_endereco.add(btn_buscar);
 		
+		campo_uf = new JTextField();
+		campo_uf.setBounds(454, 144, 63, 20);
+		panel_endereco.add(campo_uf);
+		campo_uf.setColumns(10);
+		
 		JButton btn_Sair = new JButton("Sair");
 		btn_Sair.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -261,9 +263,10 @@ public class recebeCadastro extends JFrame {
 		JButton btn_inserir = new JButton("Salvar");
 		btn_inserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				executar.inserirClientes(campo_nome.getText(),campo_cpf.getText(),campo_tel.getText(),campo_email.getText());
-				executar.inserirEndereco();
-				if(campo_nome.getText().trim().equals("") || campo_cpf.getText().trim().equals("") || campo_tel.getText().trim().equals("") || campo_email.getText().trim().equals("")) {
+				executar.postToClientes(null, campo_nome.getText(),campo_cpf.getText(),campo_tel.getText(),campo_email.getText());
+				executar.postToEndereco(null, campo_logradouro.getText(), campo_num.getText(), campo_complemento.getText(), campo_bairro.getText(), campo_cidade.getText(), campo_cep.getText(), campo_uf.getText());
+				if(campo_nome.getText().trim().equals("") || campo_cpf.getText().trim().equals("") || campo_tel.getText().trim().equals("") || campo_email.getText().trim().equals("")
+				  || campo_logradouro.getText().trim().equals("") || campo_num.getText().trim().equals("") || campo_bairro.getText().trim().equals("") || campo_cidade.getText().trim().equals("") || campo_cep.getText().trim().equals("") || campo_uf.getText().trim().equals("")) {
 					JOptionPane.showMessageDialog(btn_inserir, "Preencha todos os campos obrigatórios!");
 				}else {
 					JOptionPane.showMessageDialog(btn_inserir, "Cliente cadastrado!");
@@ -272,7 +275,7 @@ public class recebeCadastro extends JFrame {
 			
 		});
 		btn_inserir.setBounds(230, 447, 89, 23); 
-		contentPane.add(btn_inserir); 
+		contentPane.add(btn_inserir);
 	}
 }
 
