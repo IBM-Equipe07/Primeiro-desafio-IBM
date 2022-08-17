@@ -101,7 +101,11 @@ public class ViewCadastroClientes extends JPanel {
 		JTextField inputCidade = new JTextField();
 		inputCidade.setColumns(10);
 		inputCidade.setBounds(202, 342, 214, 25);
+<<<<<<< HEAD
 		add(inputCidade);
+=======
+		add(inputCidade); 
+>>>>>>> feat(insert-cliente-endereco)
 		
 		JTextField inputComplemento = new JTextField();
 		inputComplemento.setColumns(10);
@@ -161,12 +165,20 @@ public class ViewCadastroClientes extends JPanel {
 						  || inputLogradouro.getText().trim().equals("") || inputNumero.getText().trim().equals("") || inputBairro.getText().trim().equals("") || inputCidade.getText().trim().equals("") || inputCEP.getText().trim().equals("") || inputUF.getText().trim().equals("")) {
 							JOptionPane.showMessageDialog(cadastrarCliente, "Preencha todos os campos obrigatórios!");
 						}else {
+<<<<<<< HEAD
 							executar.postToClientes(null, txtNome.getText(),txtCpf.getText(),txtTelefone.getText(),txtEmail.getText());
 							executar.postToEndereco(null, inputLogradouro.getText(), inputNumero.getText(), inputComplemento.getText(), inputBairro.getText(), inputCidade.getText(), inputCEP.getText(), inputUF.getText());
 							JOptionPane.showMessageDialog(cadastrarCliente, "Cliente cadastrado!");
 						}
 					}
 				
+=======
+							executar.postToClientes(null, txtNome.getText(), txtEmail.getText(), txtCpf.getText(), txtTelefone.getText());
+							executar.postToEndereco(null, inputLogradouro.getText(), inputNumero.getText(), inputComplemento.getText(), inputBairro.getText(), inputCidade.getText(), inputCEP.getText(), inputUF.getText());
+							JOptionPane.showMessageDialog(cadastrarCliente, "Cliente cadastrado!");
+						}
+					}	
+>>>>>>> feat(insert-cliente-endereco)
 
 		});
 		

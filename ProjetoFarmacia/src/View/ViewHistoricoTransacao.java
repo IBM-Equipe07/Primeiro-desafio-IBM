@@ -26,7 +26,12 @@ public class ViewHistoricoTransacao extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+<<<<<<< HEAD
 	private JTable table;	
+=======
+	private static final long serialVersionUID = 1L;
+	private JTable table;
+>>>>>>> feat(insert-cliente-endereco)
 	DefaultTableModel model;
 	
 	public ViewHistoricoTransacao() {
@@ -40,14 +45,34 @@ public class ViewHistoricoTransacao extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 147, 527, 410);
 		add(scrollPane);
+<<<<<<< HEAD
 		
+=======
+		 
+>>>>>>> feat(insert-cliente-endereco)
 		Panel painelTabela = new Panel();
 		scrollPane.setViewportView(painelTabela);
 		painelTabela.setLayout(null);
 		
+<<<<<<< HEAD
 		JTable table = new JTable();
 		table.setBackground(new Color(255, 255, 255));
 		DefaultTableModel model = new DefaultTableModel(){  
+=======
+		
+		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+	
+//				String idCast =  (String) table.getValueAt(table.getSelectedRow(), 0);
+//				System.out.println(idCast);
+			}
+		});
+		
+		table.setBackground(new Color(255, 255, 255));
+		model = new DefaultTableModel(){  
+>>>>>>> feat(insert-cliente-endereco)
 			/**
 			 * 
 			 */
@@ -57,6 +82,7 @@ public class ViewHistoricoTransacao extends JPanel {
 				return false; 
 			}
 		};  
+<<<<<<< HEAD
 		Object[] column = {"Nota Fiscal", "Codigo Cliente", "CPF", "Codigo Produto", "Nome Produto", "Qtds.:", "Valor Unitario", "Valor Unico", "Valor Total"};
 		model.setColumnIdentifiers(column);
 		table.setModel(model);
@@ -66,6 +92,15 @@ public class ViewHistoricoTransacao extends JPanel {
 		TableColumn columnCod = colmod.getColumn(4);
 		columnCod.setMinWidth(100);
 
+=======
+		Object[] column = {"Nota Fiscal", "Codigo Cliente", "CPF", "Nome", "Codigo Produto", "Nome Produto", "Qtds.:", "Valor Unitario", "Valor Unico", "Valor Total"};
+		model.setColumnIdentifiers(column);
+		table.setModel(model);
+		scrollPane.setViewportView(table);
+		TableColumnModel colmod = table.getColumnModel();
+		TableColumn columnCod = colmod.getColumn(3);
+		columnCod.setMinWidth(100);
+>>>>>>> feat(insert-cliente-endereco)
 		
 
 		Panel panel = new Panel();
@@ -77,8 +112,11 @@ public class ViewHistoricoTransacao extends JPanel {
 		buttonPesquisar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+<<<<<<< HEAD
 			
 				
+=======
+>>>>>>> feat(insert-cliente-endereco)
 			}
 		});
 		
@@ -95,10 +133,17 @@ public class ViewHistoricoTransacao extends JPanel {
 		inputPesquisar.setBackground(new Color(217, 217, 217));
 		inputPesquisar.setBorder(null);
 		
+<<<<<<< HEAD
 		JLabel lblNewLabel = new JLabel(">>LISTAGEM DE PRODUTOS<<");
 		lblNewLabel.setFont(new Font("Artifakt Element Black", Font.PLAIN, 17));
 		lblNewLabel.setForeground(new Color(32, 92, 109));
 		lblNewLabel.setBounds(143, 11, 243, 43);
+=======
+		JLabel lblNewLabel = new JLabel(">>HISTÓRICO DE TRANSAÇÕES<<");
+		lblNewLabel.setFont(new Font("Artifakt Element Black", Font.PLAIN, 17));
+		lblNewLabel.setForeground(new Color(32, 92, 109));
+		lblNewLabel.setBounds(143, 11, 307, 43);
+>>>>>>> feat(insert-cliente-endereco)
 		add(lblNewLabel);
 		
 	}
@@ -108,7 +153,10 @@ public class ViewHistoricoTransacao extends JPanel {
 		
 		for(String[] c: dado) {
 			final Object[] row = new Object[10];
+<<<<<<< HEAD
 			toString();
+=======
+>>>>>>> feat(insert-cliente-endereco)
 			row[0] = c[0];
 			row[1] = c[1];
 			row[2] = c[2];
@@ -118,7 +166,11 @@ public class ViewHistoricoTransacao extends JPanel {
 			row[6] = c[6];
 			row[7] = String.format("R$ %.2f", Double.parseDouble(c[7]));
 			row[8] = String.format("R$ %.2f", Double.parseDouble(c[8]));
+<<<<<<< HEAD
 			row[9] = String.format("R$ %.2f", Double.parseDouble(c[9]));
+=======
+			row[9] = String.format("R$ %.2f", Double.parseDouble(c[9]));	
+>>>>>>> feat(insert-cliente-endereco)
 			model.addRow(row);
 		}
 	}

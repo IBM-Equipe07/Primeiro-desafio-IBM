@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> feat(insert-cliente-endereco)
 package View;
 
 import java.awt.Color;
@@ -53,7 +56,11 @@ public class ViewHome extends JFrame {
 			public void run() {
 				try {
 					ViewHome frame = new ViewHome();
+<<<<<<< HEAD
 					frame.setVisible(true);
+=======
+					frame.setVisible(true); 
+>>>>>>> feat(insert-cliente-endereco)
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -229,8 +236,13 @@ public class ViewHome extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				menuClicked(viewHistoricoTransacao);
 				ArrayList<String[]> lista = executar.getTransacoes();
+<<<<<<< HEAD
 				viewListagem.insertTable(lista);
 				menuClicked(viewListagem);
+=======
+				viewHistoricoTransacao.insertTable(lista);
+				
+>>>>>>> feat(insert-cliente-endereco)
 			}
 		});
 		

@@ -66,12 +66,15 @@ public class ViewAlterarDeletar extends JPanel {
 		Sistema executar = new Sistema();
 		executar.conectar();
 		
+<<<<<<< HEAD
 
 
 //		contentPane = new JPanel();
 //		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 //		setContentPane(contentPane);
 //		contentPane.setLayout(null);
+=======
+>>>>>>> feat(insert-cliente-endereco)
 		
 		JLabel lblNewLabel = new JLabel("Alterar e deletar cadastro de clientes");
 		lblNewLabel.setLocation(112, 235);
@@ -103,6 +106,7 @@ public class ViewAlterarDeletar extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String search = inputPesquisar.getText();
+<<<<<<< HEAD
 				String[] lista;
 				String[] listEnd;
 				lista = executar.getClienteID(search);
@@ -110,12 +114,21 @@ public class ViewAlterarDeletar extends JPanel {
 				listEnd = executar.getEnderecoID(lista[0]);
 				
 				
+=======
+				String[] lista = executar.getClienteID(search);
+				String[] listEnd = executar.getEnderecoID(search);
+		
+>>>>>>> feat(insert-cliente-endereco)
 				txtIdCliente.setText(lista[0]);
 				txtNome.setText(lista[1]);
 				txtEmail.setText(lista[2]);
 				txtCpf.setText(lista[3]);
 				txtTelefone.setText(lista[4]);
 				
+<<<<<<< HEAD
+=======
+
+>>>>>>> feat(insert-cliente-endereco)
 				inputLogradouro.setText(listEnd[0]);
 				inputCEP.setText(listEnd[1]);
 				inputCidade.setText(listEnd[2]);
