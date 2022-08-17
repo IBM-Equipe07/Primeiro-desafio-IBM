@@ -47,7 +47,7 @@ public class ViewListagem extends JPanel {
 		add(scrollPane);
 		
 		Panel painelTabela = new Panel();
-		scrollPane.setViewportView(painelTabela);
+		scrollPane.setViewportView(painelTabela); 
 		painelTabela.setLayout(null);
 		
 		table = new JTable();

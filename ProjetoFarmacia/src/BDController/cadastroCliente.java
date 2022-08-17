@@ -38,13 +38,13 @@ public class cadastroCliente extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() { 
+		EventQueue.invokeLater(new Runnable() {  
 			public void run() {
 				try {
 					cadastroCliente frame = new cadastroCliente();
 					frame.setVisible(true);
 				} catch (Exception e) {
-					e.printStackTrace();   
+					e.printStackTrace();    
 				} 
 			}
 		});
@@ -236,14 +236,6 @@ public class cadastroCliente extends JFrame {
 		ob10.setBounds(520, 92, 9, 14);
 		panel_endereco.add(ob10);
 		
-		JButton btn_buscar = new JButton("Buscar");
-		btn_buscar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btn_buscar.setBounds(306, 91, 89, 20);
-		panel_endereco.add(btn_buscar);
-		
 		campo_uf = new JTextField();
 		campo_uf.setBounds(454, 144, 63, 20);
 		panel_endereco.add(campo_uf);
@@ -263,12 +255,12 @@ public class cadastroCliente extends JFrame {
 		JButton btn_inserir = new JButton("Salvar");
 		btn_inserir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				executar.postToClientes(null, campo_nome.getText(),campo_cpf.getText(),campo_tel.getText(),campo_email.getText());
-				executar.postToEndereco(null, campo_logradouro.getText(), campo_num.getText(), campo_complemento.getText(), campo_bairro.getText(), campo_cidade.getText(), campo_cep.getText(), campo_uf.getText());
 				if(campo_nome.getText().trim().equals("") || campo_cpf.getText().trim().equals("") || campo_tel.getText().trim().equals("") || campo_email.getText().trim().equals("")
 				  || campo_logradouro.getText().trim().equals("") || campo_num.getText().trim().equals("") || campo_bairro.getText().trim().equals("") || campo_cidade.getText().trim().equals("") || campo_cep.getText().trim().equals("") || campo_uf.getText().trim().equals("")) {
 					JOptionPane.showMessageDialog(btn_inserir, "Preencha todos os campos obrigatórios!");
 				}else {
+					executar.postToClientes(null, campo_nome.getText(),campo_cpf.getText(),campo_tel.getText(),campo_email.getText());
+					executar.postToEndereco(null, campo_logradouro.getText(), campo_num.getText(), campo_complemento.getText(), campo_bairro.getText(), campo_cidade.getText(), campo_cep.getText(), campo_uf.getText());
 					JOptionPane.showMessageDialog(btn_inserir, "Cliente cadastrado!");
 				}
 			}

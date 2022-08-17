@@ -46,7 +46,7 @@ public class ViewHome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewHome frame = new ViewHome();
+					ViewHome frame = new ViewHome(); 
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();

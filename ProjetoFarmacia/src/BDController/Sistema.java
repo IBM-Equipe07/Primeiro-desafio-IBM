@@ -1,6 +1,5 @@
 package BDController;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -229,14 +228,179 @@ public class Sistema {
 			
 	}
 	
-	public void postPedido(String idCompra, String idCliente, String idProduto, String Data, String valor_unico, String qtd, String desconto, String valor_final) {
+	public String getProdutoNomeID (String id){
 		try {
-			String query="Insert into compra (null, idCliente, idProduto, Data, valor_unico, qtd, desconto, valor_final) values (null, '"+idCliente+"','"+idProduto+"','"+Data+"','"+valor_unico+"','"+qtd+"','"+desconto+"', '"+valor_final+"');";
+			String query="select nome from produto where codProduto="+id+";";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next(); 
+			String nome= resultset.getString("nome");
+			return nome;
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+
+	}
+	
+	public String getProdutoPrecoID (String id){
+		try {
+			String query="select preco from produto where codProduto="+id+";";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next();
+			String preco= resultset.getString("preco");
+			return preco;
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+
+	}
+	
+	
+	public String getProdutoPrecoDescontoID (String id){ 
+		try {
+			String query="select preco from produto where codProduto="+id+" and flagRemedio='s' and flagGenerico='s';";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next();
+			String preco= resultset.getString("preco");
+			double precoInt= Double.parseDouble(preco);
+			double precoDesconto = precoInt * 0.2;
+			toString();
+			String preco_desconto = String.format("%.2f", precoDesconto);
+			String precoDesc = String.valueOf(preco_desconto);
+			return precoDesc;
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+	}
+	
+	public String getProdutoPrecoFinalID (String id){ 
+		try {
+			String query="select preco from produto where codProduto="+id+" and flagRemedio='s' and flagGenerico='s';";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next();
+			String preco= resultset.getString("preco");
+			double precoInt= Double.parseDouble(preco);
+			double precoDesconto = precoInt - (precoInt * 0.2);
+			String precoDesc = String.valueOf(precoDesconto);
+			return precoDesc;
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+
+	}
+	
+	public void postPedido(String Cliente_idClientes, String produto, String data, String valor_unit, String desconto, String valor_final) {
+		try {
+			int Clientes_idClientes2 = Integer.parseInt(Cliente_idClientes);
+			int produto2 = Integer.parseInt(produto);
+			double valor_unit2 = Double.parseDouble(valor_unit);
+			double desconto2 = Double.parseDouble(desconto);
+			double valor_final2 = Double.parseDouble(valor_final);
+			String query="Insert into compra (Cliente_idClientes, produto, data, valor_unit, desconto, valor_final) values ('"+Clientes_idClientes2+"','"+produto2+"','"+data+"','"+valor_unit2+"','"+desconto2+"', '"+valor_final2+"');";
 			System.out.println(query);
 			this.statement.executeUpdate(query);
 		}catch(Exception e){
 			System.out.println("Error: "+e.getMessage());
 		}
+	}
+	
+	public String getCodCompra(String id) {
+		
+		try {
+	        String query = "select max(idCompra) from compra";
+	        this.resultset = this.statement.executeQuery(query);
+	        this.statement = this.connection.createStatement();
+	        this.resultset.next();
+	        String maxID= resultset.getString("max(idCompra)");
+	        return maxID;      
+		}catch(Exception e){
+				System.out.println("Error: "+e.getMessage());
+				
+			}
+		return null;
+					
+	}
+	
+	public String getPrecoCompra(String id){ 
+		try {
+			String query="select valor_final from compra where idCompra="+id+";";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next();
+			String preco_total= resultset.getString("valor_final");
+			return preco_total;
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+
+	}
+	
+	public boolean postCompra(String num_sequencial, String compra_idCompra, String Produto_codProduto, String quantidade, String valor_unico) {
+		try {
+			String query = "select estoque from produto where codProduto="+Produto_codProduto+";";
+            this.resultset = this.statement.executeQuery(query);
+            this.statement = this.connection.createStatement();
+            this.resultset.next();
+            String estoque= resultset.getString("estoque");
+            int estoqueProd= Integer.parseInt(estoque);
+            int num_sequencial2 = Integer.parseInt(num_sequencial);
+			int compra_idCompra2 = Integer.parseInt(compra_idCompra);
+			int Produto_codProduto2 = Integer.parseInt(Produto_codProduto);
+			int quantidade2 = Integer.parseInt(quantidade);
+			double valor_unico2 = Double.parseDouble(valor_unico);
+			if(estoqueProd>=quantidade2) {
+				String query2="Insert into itenspedidos (num_sequencial, compra_idCompra, Produto_codProduto, quantidade, valor_unico) values ('"+num_sequencial2+"','"+compra_idCompra2+"','"+Produto_codProduto2+"','"+quantidade2+"','"+valor_unico2+"');";
+				System.out.println(query2);
+				this.statement.executeUpdate(query2);
+				int novoEstoque = estoqueProd - quantidade2;
+				String query3="update produto set estoque="+novoEstoque+" where codProduto="+Produto_codProduto+";";
+				System.out.println(query3);
+				this.statement.executeUpdate(query3);
+				return true;	
+			}else {
+				System.out.println("Estoque insuficiente!");
+				return false;
+			}
+		}catch(Exception e){
+			System.out.println("Error: "+e.getMessage());
+		}
+		return false;
+	}
+	
+	public ArrayList<String[]> getTransacoes(){
+
+		try {
+		String query="select f.num_sequencial, c.idClientes, c.cpf, c.nome,f.Produto_codProduto, i.nome, f.quantidade, p.valor_unit, f.valor_unico, f.valor_total\r\n"
+				+ "from\r\n"
+				+ "cliente as c,\r\n"
+				+ "produto as i, \r\n"
+				+ "compra as p,\r\n"
+				+ "itenspedidos as f\r\n"
+				+ "where c.idClientes = p.Cliente_idClientes and i.codProduto=p.produto and p.idCompra=f.compra_idCompra;";
+		this.resultset=this.statement.executeQuery(query); 
+		this.statement=this.connection.createStatement();
+		ArrayList<String[]> lista = new ArrayList<String[]>();
+		while(this.resultset.next()) {
+			String[] list = {resultset.getString("f.num_sequencial"), resultset.getString("c.idClientes"), resultset.getString("c.cpf"), resultset.getString("c.nome"), 
+					resultset.getString("f.Produto_codProduto"), resultset.getString("i.nome"), resultset.getString("f.quantidade"), resultset.getString("p.valor_unit"), resultset.getString("f.valor_unico"), 
+					resultset.getString("f.valor_total")};
+			lista.add(list);
+			System.out.println(list[0]+" "+list[1]+" "+list[2]+" "+list[3]+" "+list[4]+" "+list[5]+" "+list[6]+" "+list[7]+ " "+list[8]+" "+list[9]);
+		}
+		return lista;
+		} catch(Exception e) {
+		System.out.println("Error"+e.getMessage());
+		return null;
+		}
+			
 	}
 	
 	
