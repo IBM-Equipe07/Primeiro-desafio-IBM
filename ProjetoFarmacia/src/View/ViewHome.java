@@ -1,5 +1,3 @@
-
-
 package View;
 
 import java.awt.Color;
@@ -9,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -38,6 +37,11 @@ public class ViewHome extends JFrame {
 	// referencia das views
 	private ViewListagem viewListagem;
 	private ViewListarProduto viewCadastrarProduto;
+	private ViewAlterarDeletar viewAlterarDeletar;
+	private ViewCadastroClientes viewCadastroClientes;
+	private ViewControleEstoque viewControleEstoque;
+	private ViewHistoricoTransacao viewHistoricoTransacao;
+	
 	
 	/**
 	 * Launch the application.
@@ -46,8 +50,8 @@ public class ViewHome extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ViewHome frame = new ViewHome(); 
-					frame.setVisible(true);
+					ViewHome frame = new ViewHome();
+					frame.setVisible(true); 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -60,12 +64,16 @@ public class ViewHome extends JFrame {
 	 */
 	
 	int x, y;
-	public ViewHome(){
+	private ViewHome() throws ParseException{
 		Sistema executar = new Sistema();
 		executar.conectar();
 		
 		viewListagem = new ViewListagem();
 		viewCadastrarProduto = new ViewListarProduto();
+		viewAlterarDeletar = new ViewAlterarDeletar();
+		viewCadastroClientes = new ViewCadastroClientes();
+		viewControleEstoque = new ViewControleEstoque();
+		viewHistoricoTransacao = new ViewHistoricoTransacao();
 		
 		setUndecorated(true);
 		setRootPaneCheckingEnabled(false);
@@ -124,7 +132,8 @@ public class ViewHome extends JFrame {
 		PainelEsquerdo.setLayout(null);
 		
 		JPanel buttonListagem = new JPanel();
-		buttonListagem.setBounds(0, 162, 254, 71);
+		buttonListagem.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		buttonListagem.setBounds(0, 135, 254, 71);
 		PainelEsquerdo.add(buttonListagem);
 		buttonListagem.setBackground(new Color(32, 92, 109));
 		buttonListagem.setLayout(null);
@@ -137,6 +146,9 @@ public class ViewHome extends JFrame {
 				menuClicked(viewListagem);
 			}
 		});
+		
+		ArrayList<String[]> lista = executar.getClientes();
+		viewListagem.insertTable(lista);
 		
 		JLabel txtListarClientes = new JLabel("LISTAR CLIENTES");
 		txtListarClientes.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -151,15 +163,16 @@ public class ViewHome extends JFrame {
 		buttonListagem.add(imgListarClientes);
 		
 		JPanel buttonCadastrar = new JPanel();
+		buttonCadastrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
 		buttonCadastrar.setBackground(new Color(32, 92, 109));
-		buttonCadastrar.setBounds(0, 232, 254, 71);
+		buttonCadastrar.setBounds(0, 205, 254, 71);
 		PainelEsquerdo.add(buttonCadastrar);
 		buttonCadastrar.setLayout(null);
 		buttonCadastrar.addMouseListener(new PanelButtonMouseAdapter(buttonCadastrar) {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				menuClicked();
+				menuClicked(viewCadastroClientes);
 			}
 		});
 		
@@ -177,15 +190,16 @@ public class ViewHome extends JFrame {
 		buttonCadastrar.add(imgCadastarClientes);
 		
 		JPanel buttonControleEstoque = new JPanel();
+		buttonControleEstoque.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		buttonControleEstoque.addMouseListener(new PanelButtonMouseAdapter(buttonControleEstoque));
 		buttonControleEstoque.setBackground(new Color(32, 92, 109));
-		buttonControleEstoque.setBounds(0, 373, 254, 71);
+		buttonControleEstoque.setBounds(0, 415, 254, 71);
 		PainelEsquerdo.add(buttonControleEstoque);
 		buttonControleEstoque.setLayout(null);
 		buttonControleEstoque.addMouseListener(new PanelButtonMouseAdapter(buttonControleEstoque) {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				menuClicked();
+				menuClicked(viewControleEstoque);
 			}
 		});
 		
@@ -202,15 +216,19 @@ public class ViewHome extends JFrame {
 		buttonControleEstoque.add(imgControleEstoque);
 		
 		JPanel buttonHistoricoTransacao = new JPanel();
+		buttonHistoricoTransacao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		buttonHistoricoTransacao.addMouseListener(new PanelButtonMouseAdapter(buttonHistoricoTransacao));
 		buttonHistoricoTransacao.setBackground(new Color(32, 92, 109));
-		buttonHistoricoTransacao.setBounds(0, 443, 254, 71);
+		buttonHistoricoTransacao.setBounds(0, 485, 254, 71);
 		PainelEsquerdo.add(buttonHistoricoTransacao);
 		buttonHistoricoTransacao.setLayout(null);
 		buttonHistoricoTransacao.addMouseListener(new PanelButtonMouseAdapter(buttonHistoricoTransacao) {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				menuClicked();
+				menuClicked(viewHistoricoTransacao);
+				ArrayList<String[]> lista = executar.getTransacoes();
+				viewHistoricoTransacao.insertTable(lista);
+				
 			}
 		});
 		
@@ -227,7 +245,8 @@ public class ViewHome extends JFrame {
 		imgHistoricoTransacao.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/transacao.png")));
 		
 		JPanel buttonCadastrarProduto = new JPanel();
-		buttonCadastrarProduto.setBounds(0, 303, 254, 71);
+		buttonCadastrarProduto.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		buttonCadastrarProduto.setBounds(0, 345, 254, 71);
 		PainelEsquerdo.add(buttonCadastrarProduto);
 		buttonCadastrarProduto.setBackground(new Color(32, 92, 109));
 		buttonCadastrarProduto.setLayout(null);
@@ -252,6 +271,37 @@ public class ViewHome extends JFrame {
 		imgCadastrarProdutos.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/produtoadd.png")));
 		imgCadastrarProdutos.setBounds(18, 15, 60, 47);
 		buttonCadastrarProduto.add(imgCadastrarProdutos);
+		
+		JPanel buttonAlterarDeletar = new JPanel();
+		buttonAlterarDeletar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		buttonAlterarDeletar.setLayout(null);
+		buttonAlterarDeletar.setBackground(new Color(32, 92, 109));
+		buttonAlterarDeletar.setBounds(0, 274, 254, 71);
+		PainelEsquerdo.add(buttonAlterarDeletar);
+		buttonAlterarDeletar.addMouseListener(new PanelButtonMouseAdapter(buttonAlterarDeletar) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				menuClicked(viewAlterarDeletar);
+
+			}
+		});
+		
+		JLabel lblAtualizardeletar = new JLabel("ATUALIZAR/DELETAR");
+		lblAtualizardeletar.setHorizontalTextPosition(SwingConstants.LEADING);
+		lblAtualizardeletar.setForeground(Color.WHITE);
+		lblAtualizardeletar.setFont(new Font("Dialog", Font.BOLD, 14));
+		lblAtualizardeletar.setBounds(70, 20, 177, 33);
+		buttonAlterarDeletar.add(lblAtualizardeletar);
+		
+		JLabel imgCadastarClientes_2 = new JLabel("");
+		imgCadastarClientes_2.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/deletar.png")));
+		imgCadastarClientes_2.setBounds(25, 17, 31, 41);
+		buttonAlterarDeletar.add(imgCadastarClientes_2);
+		
+		JLabel lblNewLabel = new JLabel("");
+		lblNewLabel.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/icon.png")));
+		lblNewLabel.setBounds(58, 14, 158, 100);
+		PainelEsquerdo.add(lblNewLabel);
 		
 		
 		JPanel PainelSuperior = new JPanel();
@@ -279,18 +329,30 @@ public class ViewHome extends JFrame {
 		PainelSuperior.setBounds(0, 0, 800, 36);
 		backgroud.add(PainelSuperior);
 		painelMain.setLayout(null);
-
-		painelMain.add(viewListagem);
+		
+		painelMain.add(viewHistoricoTransacao);
+		painelMain.add(viewControleEstoque);
+		painelMain.add(viewCadastroClientes);
+		painelMain.add(viewAlterarDeletar);
 		painelMain.add(viewCadastrarProduto);
+		painelMain.add(viewListagem);
 		
 		menuClicked(viewListagem);
+
 		
 	}
 	
 	
+
+	
 	public void menuClicked(JPanel panel) {
+		viewHistoricoTransacao.setVisible(false);
+		viewControleEstoque.setVisible(false);
+		viewCadastroClientes.setVisible(false);
 		viewListagem.setVisible(false);
 		viewCadastrarProduto.setVisible(false);
+		viewAlterarDeletar.setVisible(false);
+
 		
 		panel.setVisible(true);
 	}

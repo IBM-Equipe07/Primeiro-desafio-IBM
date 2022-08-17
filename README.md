@@ -406,6 +406,7 @@ public boolean postCompra(String num_sequencial, String compra_idCompra, String 
 
 ## Layout final do projeto 🖼️:
 
+![](./ProjetoFarmacia/imgs/layout.png)
 
 ## Autores 👨‍🎨:
 

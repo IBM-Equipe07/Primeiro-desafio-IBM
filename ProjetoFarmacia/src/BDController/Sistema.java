@@ -9,12 +9,19 @@ public class Sistema {
 	private java.sql.Statement statement=null;
 	private ResultSet resultset=null;
 	
+
+	// passagem de parametros para o conexao do banco de dados
 	public void conectar() {
+		//Criação da variável para se conetarr o dataBase
 		String servidor = "jdbc:mysql://localhost/farmacia";
+		//Usuário do banco de dados
 		String usuario = "root";
+		//Senha do usuário do banco de dados
 		String senha = "mysql";
+		//Vinculando o driver de conexão
 		String driver="com.mysql.cj.jdbc.Driver";
-	
+		
+		//Permite verificar o tratamento da exceção caso o banco de dados falhar
 		try{
 			Class.forName(driver);
 			this.connection=DriverManager.getConnection(servidor,usuario,senha);
@@ -34,6 +41,47 @@ public class Sistema {
 	}
 	
 	
+	public void AlterarEndereco(int Cliente_idClientes, String logradouro, String numero, String complemento, String bairro, String cidade, String cep, String uf) {
+        // Alterar pelos campos do banco de dados, após fazer a classe conexao.java
+        try {
+            String query = "update endereco set logradouro = '"+logradouro+"', numero = '"+numero+"', complemento = '"+complemento+"', bairro = '"+bairro+"', cidade = '"+cidade+"', cep = '"+cep+"', uf = '"+uf+"' where idEndereco = '" + Cliente_idClientes + "';";
+
+            System.out.println(query);
+            this.statement.executeUpdate(query);
+
+        }catch(Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+	
+	
+	public void AlterarClientes(int id, String nome, String cpf, String telefone, String email) {
+		// Alterar pelos campos do banco de dados, após fazer a classe conexao.java
+		try {
+			String query = "update cliente set nome = '"+nome+"', cpf = '"+cpf+"', tel = '"+telefone+"', email = '"+email+"' where idClientes = '" + id + "';";
+			
+			System.out.println(query);
+			this.statement.executeUpdate(query);
+
+		}catch(Exception e) {
+			System.out.println("Erro: " + e.getMessage());
+		}
+	}
+	
+	public void DeletarClientes(int id) {
+        // Alterar pelos campos do banco de dados, após fazer a classe conexao.java
+        try {
+            String query = "delete  from cliente where idClientes = '" + id + "';";
+            String query2 = "delete from endereco where Cliente_idClientes='" + id + "';";
+            System.out.println(query);
+            this.statement.executeUpdate(query2);
+            this.statement.executeUpdate(query);
+        }catch(Exception e) {
+            System.out.println("Erro: " + e.getMessage());
+        }
+    }
+	
+	//Criando o metódo para fazer a consulta de dados em SQL para trazer os registros
 	public ArrayList<String[]> getClientes(){
 
 		try {
@@ -78,6 +126,7 @@ public class Sistema {
 		while(this.resultset.next()) {
 			String[] list = {resultset.getString("idClientes"), resultset.getString("nome"), resultset.getString("email"), resultset.getString("cpf"), resultset.getString("tel")};
 			lista.add(list);
+		
 		}
 		
 		return lista;
@@ -93,6 +142,37 @@ public class Sistema {
 	public String[] getClienteID (String id){
 		try {
 			String query="select idClientes, nome, email, cpf, tel from cliente where idClientes="+id+";";
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			this.resultset.next();
+			String[] cliente = {resultset.getString("idClientes"), resultset.getString("nome"), resultset.getString("email"), resultset.getString("cpf"), resultset.getString("tel")};
+			
+			return cliente;
+		} catch(Exception e) {
+			return null;
+		}
+
+	}
+	
+	
+    public String[] getEnderecoID (String id){
+        try {
+            String query="select logradouro, numero, complemento, bairro, cidade, cep, uf from endereco where Cliente_idClientes="+id+";";
+            this.resultset=this.statement.executeQuery(query);
+            this.statement=this.connection.createStatement();
+            this.resultset.next();
+            String[] cliente = {resultset.getString("logradouro"), resultset.getString("numero"), resultset.getString("complemento"), resultset.getString("bairro"), resultset.getString("cidade"), resultset.getString("cep"), resultset.getString("uf")};
+            
+            return cliente;
+        } catch(Exception e) {
+            return null;
+        }
+
+    }
+	
+	public String[] getClienteNome (String nome){
+		try {
+			String query = String.format("select idClientes, nome, email, cpf, tel from cliente where nome like \"%s\";", nome);
 			this.resultset=this.statement.executeQuery(query);
 			this.statement=this.connection.createStatement();
 			this.resultset.next();
@@ -133,13 +213,13 @@ public class Sistema {
 			String[] cliente = {resultset.getString("idClientes"), resultset.getString("nome"), resultset.getString("email"), resultset.getString("cpf"), resultset.getString("tel")};
 			
 			return cliente;
-		} catch(Exception e) {
+		} catch(Exception e) { 
 			System.out.println("Error"+e.getMessage());
 			return null;
 		}
 	}
 	
-	public void postToClientes(String idClientes, String nomeCliente, String cpfCliente, String telCliente, String emailCliente) {
+	public void postToClientes(String idClientes, String nomeCliente, String emailCliente, String cpfCliente, String telCliente) {
 		try {
 			if(nomeCliente.trim().equals("") || cpfCliente.trim().equals("") || telCliente.trim().equals("") ||emailCliente.trim().equals("") ){
 				System.out.println("Cliente não cadastrado");
@@ -179,32 +259,7 @@ public class Sistema {
 	}
 	
 	//FIM - PRONTO
-	
-	/*
-	public void updateClientes(String id, String contatos) {
-		try {
-			//linha de execução da sintaxe de update em SQL
-			String query="update cliente set clientes=('"+clientes+"') where id=('"+id+"');";
-			System.out.println(query);
-			this.statement.executeUpdate(query);
-		}catch(Exception e) {
-			System.out.println("Error: "+e.getMessage());
-		}
-		
-	}
-	
-	public void deleteContato(String id) {
-		try {
-			//linha de execução da sintaxe de delete em SQL
-			String query="delete from contatos where idCliente=('"+id+"');";
-			System.out.println(query);
-			this.statement.executeUpdate(query);
-		}catch(Exception e) {
-			System.out.println("Error: "+e.getMessage());
-		}
-	}
-	*/
-	
+
 	public ArrayList<String[]> getProdutos(){
 
 		try {
@@ -226,6 +281,27 @@ public class Sistema {
 		return null;
 		}
 			
+	}
+	
+	public ArrayList<String[]> getProdutoForNome (String nome){
+		try {
+			toString();
+			nome = "%" + nome + "%";
+			String query=String.format("select codProduto, nome, descricao, preco, estoque, flagRemedio, flagGenerico from produto where nome=\"%s\";", nome);
+			this.resultset=this.statement.executeQuery(query);
+			this.statement=this.connection.createStatement();
+			ArrayList<String[]> lista = new ArrayList<String[]>();
+			while(this.resultset.next()) {
+				String[] produto = {resultset.getString("codProduto"), resultset.getString("nome"), resultset.getString("descricao"), resultset.getString("preco"), resultset.getString("estoque"), resultset.getString("flagRemedio"), resultset.getString("flagGenerico")};
+				lista.add(produto);
+			}
+				return lista;
+				
+		} catch(Exception e) {
+			System.out.println("Error"+e.getMessage());
+			return null;
+		}
+
 	}
 	
 	public String getProdutoNomeID (String id){
@@ -393,15 +469,14 @@ public class Sistema {
 					resultset.getString("f.Produto_codProduto"), resultset.getString("i.nome"), resultset.getString("f.quantidade"), resultset.getString("p.valor_unit"), resultset.getString("f.valor_unico"), 
 					resultset.getString("f.valor_total")};
 			lista.add(list);
-			System.out.println(list[0]+" "+list[1]+" "+list[2]+" "+list[3]+" "+list[4]+" "+list[5]+" "+list[6]+" "+list[7]+ " "+list[8]+" "+list[9]);
 		}
 		return lista;
 		} catch(Exception e) {
 		System.out.println("Error"+e.getMessage());
 		return null;
 		}
-			
+		
+	
 	}
-	
-	
+
 }

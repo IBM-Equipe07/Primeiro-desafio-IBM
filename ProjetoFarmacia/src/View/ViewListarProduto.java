@@ -92,7 +92,11 @@ public class ViewListarProduto extends JPanel {
 		buttonPesquisar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-
+				String search = inputPesquisar.getText();
+				System.out.println(search);
+				ArrayList<String[]> lista = executar.getProdutoForNome(search);
+				insertTable(lista);
+				
 			}
 		});
 		
@@ -109,6 +113,12 @@ public class ViewListarProduto extends JPanel {
 		setVisible(true);
 		inputPesquisar.setBackground(new Color(217, 217, 217));
 		inputPesquisar.setBorder(null);
+		
+		JLabel lblNewLabel = new JLabel(">>LISTAGEM DE PRODUTOS<<");
+		lblNewLabel.setFont(new Font("Artifakt Element Black", Font.PLAIN, 17));
+		lblNewLabel.setForeground(new Color(32, 92, 109));
+		lblNewLabel.setBounds(143, 11, 243, 43);
+		add(lblNewLabel);
 		
 	}
 	
@@ -131,5 +141,4 @@ public class ViewListarProduto extends JPanel {
 	public JTable getTable() {
 		return table;
 	}
-	
 }
