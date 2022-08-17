@@ -45,49 +45,7 @@ CREATE TABLE IF NOT EXISTS `farmacia`.`cliente` (
   UNIQUE INDEX `cpf_UNIQUE` (`cpf` ASC) VISIBLE,
   UNIQUE INDEX `tel_UNIQUE` (`tel` ASC) VISIBLE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 37
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `farmacia`.`venda`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `farmacia`.`venda` (
-  `idCompra` INT NOT NULL AUTO_INCREMENT,
-  `Cliente_idClientes` INT NOT NULL,
-  `data` DATE NULL DEFAULT NULL,
-  `valor_bruto` DOUBLE NULL DEFAULT NULL,
-  `desconto` DOUBLE NULL DEFAULT NULL,
-  `valor_final` DOUBLE NULL DEFAULT NULL,
-  PRIMARY KEY (`idCompra`),
-  INDEX `fk_compra_Cliente1_idx` (`Cliente_idClientes` ASC) VISIBLE,
-  CONSTRAINT `fk_compra_Cliente1`
-    FOREIGN KEY (`Cliente_idClientes`)
-    REFERENCES `farmacia`.`cliente` (`idClientes`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8;
-
-
--- -----------------------------------------------------
--- Table `farmacia`.`endereco`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `farmacia`.`endereco` (
-  `idEndereco` INT NOT NULL AUTO_INCREMENT,
-  `logradouro` VARCHAR(45) NULL DEFAULT NULL,
-  `numero` INT NULL DEFAULT NULL,
-  `complemento` VARCHAR(45) NULL DEFAULT NULL,
-  `bairro` VARCHAR(45) NULL DEFAULT NULL,
-  `cidade` VARCHAR(45) NULL DEFAULT NULL,
-  `cep` VARCHAR(10) NULL DEFAULT NULL,
-  `uf` VARCHAR(2) NULL DEFAULT NULL,
-  `Cliente_idClientes` INT NOT NULL,
-  PRIMARY KEY (`idEndereco`),
-  INDEX `fk_Endereco_Cliente1_idx` (`Cliente_idClientes` ASC) VISIBLE,
-  CONSTRAINT `fk_Endereco_Cliente1`
-    FOREIGN KEY (`Cliente_idClientes`)
-    REFERENCES `farmacia`.`cliente` (`idClientes`))
-ENGINE = InnoDB
-AUTO_INCREMENT = 6
+AUTO_INCREMENT = 38
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -112,25 +70,69 @@ DEFAULT CHARACTER SET = utf8;
 -- Table `farmacia`.`compra`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `farmacia`.`compra` (
-  `cod_Venda` INT NOT NULL,
-  `venda_idCompra` INT NOT NULL,
-  `produto_codProduto` INT NOT NULL,
-  `qtd` INT NULL,
-  `valor_unt` DOUBLE NULL,
-  `valor_total` DOUBLE NULL,
-  PRIMARY KEY (`cod_Venda`),
-  INDEX `fk_venda_has_produto_produto1_idx` (`produto_codProduto` ASC) VISIBLE,
-  INDEX `fk_venda_has_produto_venda1_idx` (`venda_idCompra` ASC) VISIBLE,
-  CONSTRAINT `fk_venda_has_produto_venda1`
-    FOREIGN KEY (`venda_idCompra`)
-    REFERENCES `farmacia`.`venda` (`idCompra`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_venda_has_produto_produto1`
-    FOREIGN KEY (`produto_codProduto`)
-    REFERENCES `farmacia`.`produto` (`codProduto`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `idCompra` INT NOT NULL AUTO_INCREMENT,
+  `Cliente_idClientes` INT NULL DEFAULT NULL,
+  `produto` INT NULL DEFAULT NULL,
+  `data` VARCHAR(12) NULL DEFAULT NULL,
+  `valor_unit` DOUBLE NULL DEFAULT NULL,
+  `desconto` DOUBLE NULL DEFAULT NULL,
+  `valor_final` DOUBLE NULL DEFAULT NULL,
+  PRIMARY KEY (`idCompra`),
+  INDEX `fk_compra_Cliente1_idx` (`Cliente_idClientes` ASC) VISIBLE,
+  INDEX `fk_compra_codProduto` (`produto` ASC) VISIBLE,
+  CONSTRAINT `fk_compra_Cliente1`
+    FOREIGN KEY (`Cliente_idClientes`)
+    REFERENCES `farmacia`.`cliente` (`idClientes`),
+  CONSTRAINT `fk_compra_codProduto`
+    FOREIGN KEY (`produto`)
+    REFERENCES `farmacia`.`produto` (`codProduto`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 43
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `farmacia`.`endereco`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `farmacia`.`endereco` (
+  `idEndereco` INT NOT NULL AUTO_INCREMENT,
+  `logradouro` VARCHAR(45) NULL DEFAULT NULL,
+  `numero` INT NULL DEFAULT NULL,
+  `complemento` VARCHAR(45) NULL DEFAULT NULL,
+  `bairro` VARCHAR(45) NULL DEFAULT NULL,
+  `cidade` VARCHAR(45) NULL DEFAULT NULL,
+  `cep` VARCHAR(10) NULL DEFAULT NULL,
+  `uf` VARCHAR(2) NULL DEFAULT NULL,
+  `Cliente_idClientes` INT NOT NULL,
+  PRIMARY KEY (`idEndereco`),
+  INDEX `fk_Endereco_Cliente1_idx` (`Cliente_idClientes` ASC) VISIBLE,
+  CONSTRAINT `fk_Endereco_Cliente1`
+    FOREIGN KEY (`Cliente_idClientes`)
+    REFERENCES `farmacia`.`cliente` (`idClientes`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 7
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `farmacia`.`itenspedidos`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `farmacia`.`itenspedidos` (
+  `num_sequencial` INT NOT NULL,
+  `compra_idCompra` INT NOT NULL,
+  `Produto_codProduto` INT NOT NULL,
+  `quantidade` INT NULL DEFAULT NULL,
+  `valor_unico` DOUBLE NULL DEFAULT NULL,
+  `valor_total` SMALLINT GENERATED ALWAYS AS ((`quantidade` * `valor_unico`)) VIRTUAL,
+  PRIMARY KEY (`num_sequencial`),
+  INDEX `fk_compra_has_Produto_Produto1_idx` (`Produto_codProduto` ASC) VISIBLE,
+  INDEX `fk_compra_has_Produto_compra1_idx` (`compra_idCompra` ASC) VISIBLE,
+  CONSTRAINT `fk_compra_has_Produto_compra1`
+    FOREIGN KEY (`compra_idCompra`)
+    REFERENCES `farmacia`.`compra` (`idCompra`),
+  CONSTRAINT `fk_compra_has_Produto_Produto1`
+    FOREIGN KEY (`Produto_codProduto`)
+    REFERENCES `farmacia`.`produto` (`codProduto`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
@@ -138,6 +140,7 @@ DEFAULT CHARACTER SET = utf8;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
 
 ```
 
