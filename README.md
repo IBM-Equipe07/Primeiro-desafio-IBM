@@ -10,7 +10,7 @@
 
 #### a. Construção do diagrama DER E MER:
 
-![](./ProjetoFarmacia/imgs/diagrama_mer.png)
+![](./ProjetoFarmacia/banco%20de%20dados/MER.sql.png)
 
 <p align="justify">Aqui nós construímos o diagrama de entidade relacionamento para descrever as entidades envolvidas no processo, com seus atributos e como elas se relacionam entre si. Após isso, obtivemos o Modelo de Entidade Relacionamento, conforme abaixo: </p>
 
