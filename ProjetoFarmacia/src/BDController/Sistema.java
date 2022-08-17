@@ -17,11 +17,7 @@ public class Sistema {
 		//Usuário do banco de dados
 		String usuario = "root";
 		//Senha do usuário do banco de dados
-<<<<<<< HEAD
-		String senha = "admin";
-=======
 		String senha = "mysql";
->>>>>>> feat(insert-cliente-endereco)
 		//Vinculando o driver de conexão
 		String driver="com.mysql.cj.jdbc.Driver";
 		
@@ -73,20 +69,6 @@ public class Sistema {
 	}
 	
 	public void DeletarClientes(int id) {
-<<<<<<< HEAD
-		// Alterar pelos campos do banco de dados, após fazer a classe conexao.java
-		try {
-			String query = "delete from cliente where idClientes = '" + id + "';";
-			
-			System.out.println(query);
-			this.statement.executeUpdate(query);
-
-		}catch(Exception e) {
-			System.out.println("Erro: " + e.getMessage());
-		}
-	}
-	
-=======
         // Alterar pelos campos do banco de dados, após fazer a classe conexao.java
         try {
             String query = "delete  from cliente where idClientes = '" + id + "';";
@@ -98,7 +80,6 @@ public class Sistema {
             System.out.println("Erro: " + e.getMessage());
         }
     }
->>>>>>> feat(insert-cliente-endereco)
 	
 	//Criando o metódo para fazer a consulta de dados em SQL para trazer os registros
 	public ArrayList<String[]> getClientes(){
@@ -174,22 +155,6 @@ public class Sistema {
 	}
 	
 	
-<<<<<<< HEAD
-	public String[] getEnderecoID (String id){
-		try {
-			String query="select logradouro, numero, complemento, bairro, cidade, cep, uf from endereco where idEndereco="+id+";";
-			this.resultset=this.statement.executeQuery(query);
-			this.statement=this.connection.createStatement();
-			this.resultset.next();
-			String[] cliente = {resultset.getString("logradouro"), resultset.getString("numero"), resultset.getString("complemento"), resultset.getString("bairro"), resultset.getString("cidade"), resultset.getString("cep"), resultset.getString("uf")};
-			
-			return cliente;
-		} catch(Exception e) {
-			return null;
-		}
-
-	}
-=======
     public String[] getEnderecoID (String id){
         try {
             String query="select logradouro, numero, complemento, bairro, cidade, cep, uf from endereco where Cliente_idClientes="+id+";";
@@ -204,7 +169,6 @@ public class Sistema {
         }
 
     }
->>>>>>> feat(insert-cliente-endereco)
 	
 	public String[] getClienteNome (String nome){
 		try {
@@ -249,21 +213,13 @@ public class Sistema {
 			String[] cliente = {resultset.getString("idClientes"), resultset.getString("nome"), resultset.getString("email"), resultset.getString("cpf"), resultset.getString("tel")};
 			
 			return cliente;
-<<<<<<< HEAD
-		} catch(Exception e) {
-=======
 		} catch(Exception e) { 
->>>>>>> feat(insert-cliente-endereco)
 			System.out.println("Error"+e.getMessage());
 			return null;
 		}
 	}
 	
-<<<<<<< HEAD
-	public void postToClientes(String idClientes, String nomeCliente, String cpfCliente, String telCliente, String emailCliente) {
-=======
 	public void postToClientes(String idClientes, String nomeCliente, String emailCliente, String cpfCliente, String telCliente) {
->>>>>>> feat(insert-cliente-endereco)
 		try {
 			if(nomeCliente.trim().equals("") || cpfCliente.trim().equals("") || telCliente.trim().equals("") ||emailCliente.trim().equals("") ){
 				System.out.println("Cliente não cadastrado");
@@ -303,36 +259,7 @@ public class Sistema {
 	}
 	
 	//FIM - PRONTO
-<<<<<<< HEAD
-	
-	/*
-	public void updateClientes(String id, String contatos) {
-		try {
-			//linha de execução da sintaxe de update em SQL
-			String query="update cliente set clientes=('"+clientes+"') where id=('"+id+"');";
-			System.out.println(query);
-			this.statement.executeUpdate(query);
-		}catch(Exception e) {
-			System.out.println("Error: "+e.getMessage());
-		}
-		
-	}
-	
-	public void deleteContato(String id) {
-		try {
-			//linha de execução da sintaxe de delete em SQL
-			String query="delete from contatos where idCliente=('"+id+"');";
-			System.out.println(query);
-			this.statement.executeUpdate(query);
-		}catch(Exception e) {
-			System.out.println("Error: "+e.getMessage());
-		}
-	}
-	*/
-	
-=======
 
->>>>>>> feat(insert-cliente-endereco)
 	public ArrayList<String[]> getProdutos(){
 
 		try {
@@ -542,10 +469,6 @@ public class Sistema {
 					resultset.getString("f.Produto_codProduto"), resultset.getString("i.nome"), resultset.getString("f.quantidade"), resultset.getString("p.valor_unit"), resultset.getString("f.valor_unico"), 
 					resultset.getString("f.valor_total")};
 			lista.add(list);
-<<<<<<< HEAD
-			System.out.println(list[0]+" "+list[1]+" "+list[2]+" "+list[3]+" "+list[4]+" "+list[5]+" "+list[6]+" "+list[7]+ " "+list[8]+" "+list[9]);
-=======
->>>>>>> feat(insert-cliente-endereco)
 		}
 		return lista;
 		} catch(Exception e) {

@@ -72,11 +72,7 @@ public class ViewListagem extends JPanel {
 				return false; 
 			}
 		};  
-<<<<<<< HEAD
-		Object[] column = {"Codigo", "Nome", "Email"};
-=======
 		Object[] column = {"Codigo", "Nome", "Cpf"};
->>>>>>> feat(insert-cliente-endereco)
 		model.setColumnIdentifiers(column);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
@@ -94,11 +90,7 @@ public class ViewListagem extends JPanel {
 		JLabel buttonPesquisar = new JLabel("");
 		buttonPesquisar.addMouseListener(new MouseAdapter() {
 			@Override
-<<<<<<< HEAD
-			public void mouseClicked(MouseEvent e) {
-=======
 			public void mouseClicked(MouseEvent e) { 
->>>>>>> feat(insert-cliente-endereco)
 				String search = inputPesquisar.getText();
 				
 					ArrayList<String[]> lista = new ArrayList<>();
@@ -149,11 +141,7 @@ public class ViewListagem extends JPanel {
 			final Object[] row = new Object[3];
 			row[0] = c[0];
 			row[1] = c[1];
-<<<<<<< HEAD
-			row[2] = c[2];
-=======
 			row[2] = c[3];
->>>>>>> feat(insert-cliente-endereco)
 			model.addRow(row);
 			
 		}
