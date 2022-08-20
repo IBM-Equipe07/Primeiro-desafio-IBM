@@ -1,3 +1,5 @@
+
+
 package View;
 
 import java.awt.Color;
@@ -41,7 +43,7 @@ public class ViewHome extends JFrame {
 	private ViewCadastroClientes viewCadastroClientes;
 	private ViewControleEstoque viewControleEstoque;
 	private ViewHistoricoTransacao viewHistoricoTransacao;
-	
+
 	
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class ViewHome extends JFrame {
 			public void run() {
 				try {
 					ViewHome frame = new ViewHome();
-					frame.setVisible(true); 
+					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -227,8 +229,9 @@ public class ViewHome extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				menuClicked(viewHistoricoTransacao);
 				ArrayList<String[]> lista = executar.getTransacoes();
-				viewHistoricoTransacao.insertTable(lista);
 				
+				viewListagem.insertTable(lista);
+
 			}
 		});
 		
@@ -299,7 +302,7 @@ public class ViewHome extends JFrame {
 		buttonAlterarDeletar.add(imgCadastarClientes_2);
 		
 		JLabel lblNewLabel = new JLabel("");
-		lblNewLabel.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/icon.png")));
+		lblNewLabel.setIcon(new ImageIcon(ViewHome.class.getResource("/View/image/iconTB.png")));
 		lblNewLabel.setBounds(58, 14, 158, 100);
 		PainelEsquerdo.add(lblNewLabel);
 		
@@ -330,12 +333,15 @@ public class ViewHome extends JFrame {
 		backgroud.add(PainelSuperior);
 		painelMain.setLayout(null);
 		
+		
+//		painelMain.add(PainelSuperior)
 		painelMain.add(viewHistoricoTransacao);
 		painelMain.add(viewControleEstoque);
 		painelMain.add(viewCadastroClientes);
 		painelMain.add(viewAlterarDeletar);
 		painelMain.add(viewCadastrarProduto);
 		painelMain.add(viewListagem);
+		
 		
 		menuClicked(viewListagem);
 

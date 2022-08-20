@@ -27,7 +27,7 @@ public class ViewControleEstoque extends JPanel {
 	 */
 	public ViewControleEstoque() throws ParseException {
 		Sistema executar = new Sistema();
-		executar.conectar(); 
+		executar.conectar();
 
 		setBounds(0, 0, 547, 567);
 		setBackground(new Color(217, 217, 217));

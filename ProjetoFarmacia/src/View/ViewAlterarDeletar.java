@@ -65,7 +65,10 @@ public class ViewAlterarDeletar extends JPanel {
 		
 		Sistema executar = new Sistema();
 		executar.conectar();
-		
+		JPanel centralizar = new JPanel();
+		centralizar.setBounds(268, 264, 16, 20);
+		add(centralizar);
+		centralizar.setBackground(new Color(217, 217, 217));
 		
 		JLabel lblNewLabel = new JLabel("Alterar e deletar cadastro de clientes");
 		lblNewLabel.setLocation(112, 235);
@@ -251,7 +254,7 @@ public class ViewAlterarDeletar extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				executar.DeletarClientes(Integer.parseInt(txtIdCliente.getText()));
-				JOptionPane.showMessageDialog(buttonDeletar, "CLIENTE EXCLUIDO COM SUCESSO");
+				JOptionPane.showMessageDialog(centralizar, "CLIENTE EXCLUIDO COM SUCESSO");
 			}
 		});
 		
@@ -279,7 +282,7 @@ public class ViewAlterarDeletar extends JPanel {
 					txtEmail.getText(),
 					txtTelefone.getText());
 				
-				JOptionPane.showMessageDialog(buttonAlterarCliente, "CLIENTE ALTERADO COM SUCESSO");
+				JOptionPane.showMessageDialog(centralizar, "CLIENTE ALTERADO COM SUCESSO");
 				
 			}
 		});
@@ -312,7 +315,7 @@ public class ViewAlterarDeletar extends JPanel {
 					inputCEP.getText(),
 					inputUF.getText());
 					
-					JOptionPane.showMessageDialog(buttonAlterarCliente, "ENDEREÇO ALTERADO COM SUCESSO");
+					JOptionPane.showMessageDialog(centralizar, "ENDEREÇO ALTERADO COM SUCESSO");
 			}
 		});
 		
@@ -338,7 +341,9 @@ public class ViewAlterarDeletar extends JPanel {
 		lblNewLabel_6.setFont(new Font("Artifakt Element Black", Font.PLAIN, 17));
 		lblNewLabel_6.setBounds(162, 11, 224, 42);
 		add(lblNewLabel_6);
+		
 
+		
 	}
 }
 

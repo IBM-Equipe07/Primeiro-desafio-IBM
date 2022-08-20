@@ -29,6 +29,11 @@ public class ViewCadastroClientes extends JPanel {
 		setBounds(0, 0, 547, 567);
 		setBackground(new Color(217, 217, 217));
 		setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(252, 237, 26, 17);
+		add(panel);
+		panel.setBackground(new Color(217, 217, 217));
 
 		
 		JLabel lblNewLabel = new JLabel("Alterar e deletar cadastro de clientes");
@@ -101,7 +106,7 @@ public class ViewCadastroClientes extends JPanel {
 		JTextField inputCidade = new JTextField();
 		inputCidade.setColumns(10);
 		inputCidade.setBounds(202, 342, 214, 25);
-		add(inputCidade); 
+		add(inputCidade);
 		
 		JTextField inputComplemento = new JTextField();
 		inputComplemento.setColumns(10);
@@ -159,13 +164,14 @@ public class ViewCadastroClientes extends JPanel {
 			public void mouseClicked(MouseEvent e) {
 				if(txtNome.getText().trim().equals("") || txtCpf.getText().trim().equals("") || txtTelefone.getText().trim().equals("") || txtEmail.getText().trim().equals("")
 						  || inputLogradouro.getText().trim().equals("") || inputNumero.getText().trim().equals("") || inputBairro.getText().trim().equals("") || inputCidade.getText().trim().equals("") || inputCEP.getText().trim().equals("") || inputUF.getText().trim().equals("")) {
-							JOptionPane.showMessageDialog(cadastrarCliente, "Preencha todos os campos obrigatórios!");
+							JOptionPane.showMessageDialog(panel, "Preencha todos os campos obrigatórios!");
 						}else {
-							executar.postToClientes(null, txtNome.getText(), txtEmail.getText(), txtCpf.getText(), txtTelefone.getText());
+							executar.postToClientes(null, txtNome.getText(), txtEmail.getText() ,txtCpf.getText(), txtTelefone.getText());
 							executar.postToEndereco(null, inputLogradouro.getText(), inputNumero.getText(), inputComplemento.getText(), inputBairro.getText(), inputCidade.getText(), inputCEP.getText(), inputUF.getText());
-							JOptionPane.showMessageDialog(cadastrarCliente, "Cliente cadastrado!");
+							JOptionPane.showMessageDialog(panel, "Cliente cadastrado!");
 						}
-					}	
+					}
+				
 
 		});
 		

@@ -26,8 +26,7 @@ public class ViewHistoricoTransacao extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	private static final long serialVersionUID = 1L;
-	private JTable table;
+	private JTable table;	
 	DefaultTableModel model;
 	
 	public ViewHistoricoTransacao() {
@@ -41,23 +40,12 @@ public class ViewHistoricoTransacao extends JPanel {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 147, 527, 410);
 		add(scrollPane);
-		 
+		
 		Panel painelTabela = new Panel();
 		scrollPane.setViewportView(painelTabela);
 		painelTabela.setLayout(null);
 		
-		
 		table = new JTable();
-		table.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-	
-//				String idCast =  (String) table.getValueAt(table.getSelectedRow(), 0);
-//				System.out.println(idCast);
-			}
-		});
-		
-		table.setBackground(new Color(255, 255, 255));
 		model = new DefaultTableModel(){  
 			/**
 			 * 
@@ -68,13 +56,15 @@ public class ViewHistoricoTransacao extends JPanel {
 				return false; 
 			}
 		};  
-		Object[] column = {"Nota Fiscal", "Codigo Cliente", "CPF", "Nome", "Codigo Produto", "Nome Produto", "Qtds.:", "Valor Unitario", "Valor Unico", "Valor Total"};
+		Object[] column = {"Nota Fiscal", "Codigo Cliente", "CPF", "Codigo Produto", "Nome Produto", "Qtds.:", "Valor Unitario", "Valor Unico", "Valor Total"};
 		model.setColumnIdentifiers(column);
 		table.setModel(model);
 		scrollPane.setViewportView(table);
+	
 		TableColumnModel colmod = table.getColumnModel();
-		TableColumn columnCod = colmod.getColumn(3);
+		TableColumn columnCod = colmod.getColumn(4);
 		columnCod.setMinWidth(100);
+
 		
 
 		Panel panel = new Panel();
@@ -86,6 +76,8 @@ public class ViewHistoricoTransacao extends JPanel {
 		buttonPesquisar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+			
+				
 			}
 		});
 		
@@ -102,10 +94,10 @@ public class ViewHistoricoTransacao extends JPanel {
 		inputPesquisar.setBackground(new Color(217, 217, 217));
 		inputPesquisar.setBorder(null);
 		
-		JLabel lblNewLabel = new JLabel(">>HISTÓRICO DE TRANSAÇÕES<<");
+		JLabel lblNewLabel = new JLabel(">>LISTAGEM DE PRODUTOS<<");
 		lblNewLabel.setFont(new Font("Artifakt Element Black", Font.PLAIN, 17));
 		lblNewLabel.setForeground(new Color(32, 92, 109));
-		lblNewLabel.setBounds(143, 11, 307, 43);
+		lblNewLabel.setBounds(143, 11, 243, 43);
 		add(lblNewLabel);
 		
 	}
@@ -115,6 +107,8 @@ public class ViewHistoricoTransacao extends JPanel {
 		
 		for(String[] c: dado) {
 			final Object[] row = new Object[10];
+			toString();
+			
 			row[0] = c[0];
 			row[1] = c[1];
 			row[2] = c[2];
@@ -124,7 +118,7 @@ public class ViewHistoricoTransacao extends JPanel {
 			row[6] = c[6];
 			row[7] = String.format("R$ %.2f", Double.parseDouble(c[7]));
 			row[8] = String.format("R$ %.2f", Double.parseDouble(c[8]));
-			row[9] = String.format("R$ %.2f", Double.parseDouble(c[9]));	
+			row[9] = String.format("R$ %.2f", Double.parseDouble(c[9]));
 			model.addRow(row);
 		}
 	}
